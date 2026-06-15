@@ -14,17 +14,13 @@ model User {
   imageUrl    String?
   createdAt   DateTime @default(now())
 
-  listings    Listing[]
 }
 
 model Listing {
-  id          String   @id @default(cuid())
+  id          String @id @default(cuid())
   title       String
   description String
   price       Float
 
   createdAt   DateTime @default(now())
-
-  sellerId    String
-  seller      User @relation(fields: [sellerId], references: [id])
 }
