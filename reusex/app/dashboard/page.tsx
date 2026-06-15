@@ -13,6 +13,10 @@ export default async function Dashboard() {
       <h1 className="text-3xl font-bold">
         Welcome to ReUseX Dashboard
       </h1>
+
+      <p className="mt-4">
+        You are successfully authenticated.
+      </p>
     </main>
   );
 }
