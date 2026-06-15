@@ -1,4 +1,6 @@
 import { prisma } from "@/lib/prisma";
+import Link from "next/link";
+import Image from "next/image";
 
 export default async function Home() {
   const listings = await prisma.listing.findMany({
@@ -14,14 +16,20 @@ export default async function Home() {
         <div className="mx-auto max-w-7xl px-6 py-4 flex justify-between items-center">
           <h1 className="text-2xl font-bold">ReUseX</h1>
 
-          <div className="space-x-4">
-            <button className="px-4 py-2 border rounded">
-              Login
-            </button>
+          <div className="flex items-center gap-4">
+            <Link
+              href="/listings/new"
+              className="px-4 py-2 bg-black text-white rounded"
+            >
+              Sell Item
+            </Link>
 
-            <button className="px-4 py-2 bg-black text-white rounded">
-              Sign Up
-            </button>
+            <Link
+              href="/dashboard"
+              className="px-4 py-2 border rounded"
+            >
+              Dashboard
+            </Link>
           </div>
         </div>
       </nav>
@@ -51,10 +59,20 @@ export default async function Home() {
         ) : (
           <div className="grid gap-4">
             {listings.map((listing) => (
-              <div
+              <Link
                 key={listing.id}
-                className="border rounded-lg p-4"
+                href={`/listings/${listing.id}`}
+                className="block border rounded-lg p-4 hover:shadow-lg transition"
               >
+                {listing.imageUrl && (
+                  <Image
+                    src={listing.imageUrl}
+                    alt={listing.title}
+                    width={400}
+                    height={250}
+                    className="w-full h-48 object-cover rounded mb-4"
+                  />
+                )}
                 <h3 className="text-xl font-semibold">
                   {listing.title}
                 </h3>
@@ -66,7 +84,7 @@ export default async function Home() {
                 <p className="font-bold mt-3">
                   ₹{listing.price}
                 </p>
-              </div>
+              </Link>
             ))}
           </div>
         )}
